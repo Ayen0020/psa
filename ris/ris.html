@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Requisition and Issue Slip</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<h2>REQUISITION AND ISSUE SLIP</h2>
+<form id="risForm">
+
+    <div class="form-section">
+        <div>
+            <label>Division:</label>
+            <input type="text" name="division" required>
+
+            <label>Office:</label>
+            <input type="text" name="office" value="PSA-Quirino" required>
+
+            <label>Responsibility Center Code:</label>
+            <input type="text" name="rcc" required>
+        </div>
+        <div>
+            <label>RIS No.:</label>
+            <input type="text" name="ris_no" required>
+
+            <label>Purpose:</label>
+            <textarea name="purpose" rows="3" required></textarea>
+        </div>
+    </div>
+
+    <table class="styled-table" id="itemsTable">
+        <thead>
+            <tr>
+                <th>Stock No</th>
+                <th>Unit</th>
+                <th>Description</th>
+                <th>Requested Quantity</th>
+                <th>Issued Quantity</th>
+                <th>Remarks</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="text" name="stock_no[]" required></td>
+                <td>
+                    <select name="unit[]" required>
+                        <option value="">--Select--</option>
+                        <option value="pcs">pcs</option>
+                        <option value="box">box</option>
+                        <option value="set">set</option>
+                        <option value="ream">ream</option>
+                        <option value="pack">pack</option>
+                        <option value="pack">liter</option>
+                        <option value="pack">bottle</option>
+                        <option value="pack">kg</option>
+                        <option value="pack">roll</option>
+                      </select>
+                </td>
+                <td><input type="text" name="description[]"></td>
+                <td><input type="number" name="qty[]" required></td>
+                <td><input type="number" name="i_qty[]" required></td>
+                <td><input type="text" name="remarks[]"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Add Row button -->
+    <div style="text-align: left; margin-bottom: 10px;">
+        <button type="button" onclick="addRow()">Add Row</button>
+    </div>
+
+    <!-- Submit button -->
+    <div style="text-align: left;">
+        <button type="button" class="submit-btn" onclick="confirmSubmit()">Submit</button>
+    </div>
+    <div style="text-align: left;">
+        <button type="button" class="submit-btn" onclick="confirmSubmit()">Submit</button>
+    </div>
+</form>
+
+<script>
+    function addRow() {
+        const table = document.getElementById("itemsTable").getElementsByTagName('tbody')[0];
+        const newRow = table.insertRow();
+
+        newRow.innerHTML = `
+            <td><input type="text" name="stock_no[]" required></td>
+            <td><input type="text" name="unit[]" required></td>
+            <td><input type="text" name="description[]"></td>
+            <td><input type="number" name="qty[]" required></td>
+            <td><input type="number" name="i_qty[]" required></td>
+            <td><input type="text" name="remarks[]"></td>
+        `;
+
+        let cell2 = row.insertCell();
+      cell3.innerHTML = `
+        <select name="unit[]" required>
+          <option value="">--Select--</option>
+          <option value="pcs">pcs</option>
+          <option value="box">box</option>
+          <option value="set">set</option>
+          <option value="ream">ream</option>
+          <option value="pack">pack</option>
+          <option value="pack">liter</option>
+          <option value="pack">bottle</option>
+          <option value="pack">kg</option>
+          <option value="pack">roll</option>
+        </select>
+      `;
+    }
+
+    function confirmSubmit() {
+        Swal.fire({
+            title: 'Submit RIS?',
+            text: "Are you sure you want to submit this form?",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, submit it!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                submitFormAJAX();
+            }
+        });
+    }
+
+    function submitFormAJAX() {
+        const form = document.getElementById('risForm');
+        const formData = new FormData(form);
+
+        fetch('submit_ris.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                Swal.fire('Submitted!', data.message, 'success');
+                form.reset();
+            } else {
+                Swal.fire('Error!', data.message, 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            Swal.fire('Oops!', 'Something went wrong.', 'error');
+        });
+    }
+</script>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="date"],
+    textarea {
+        width: 100%;
+        padding: 6px;
+        box-sizing: border-box;
+        margin-top: 3px;
+        margin-bottom: 10px;
+    }
+
+    .form-section {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+    }
+
+    .form-section div {
+        flex: 0 0 48%;
+    }
+
+    .styled-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 10px;
+    }
+
+    .styled-table th, .styled-table td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: center;
+    }
+
+    .styled-table thead {
+        background-color: #f1f1f1;
+    }
+
+    .styled-table input {
+        width: 100%;
+        border: none;
+        padding: 6px;
+        box-sizing: border-box;
+    }
+
+    .submit-btn {
+        margin-top: 20px;
+        padding: 8px 20px;
+        font-size: 16px;
+    }
+</style>
+
+</body>
+</html>
