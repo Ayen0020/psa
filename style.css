@@ -1,35 +1,269 @@
-body {
-    font-family: Arial, sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+*{
+    font-family: "Poppins" , sans-serif;
 }
 
-.header {
-    height: 80px;
-    background-color: white;
-    border-bottom: 2px solid black;
+
+
+        /* nav and header css */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #E4E9F7;
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 5px 20px;
+            background-color: #4169e1;
+            color: white;
+            position: fixed;
+            top: 0;
+            left: 78px;
+            width: calc(100% - 78px);
+            height: 80px;
+            transition: all 0.5s ease;
+            z-index: 98;
+        }
+
+        .header-logo img {
+            height: 60px;
+            margin-right: 20px;
+        }
+
+        .header-titles {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .header-subtitle {
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 78px;
+            background: #191970;
+            padding: 6px 14px;
+            z-index: 99;
+            transition: all 0.5s ease;
+        }
+
+        .sidebar.open {
+            width: 250px;
+        }
+
+        .logo-details {
+            height: 60px;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .logo_name {
+            color: #fff;
+            font-size: 20px;
+            font-weight: 600;
+            opacity: 0;
+            transition: all 0.5s ease;
+            margin-left: 10px;
+        }
+
+        .sidebar.open .logo_name {
+            opacity: 1;
+        }
+
+        #btn {
+            position: absolute;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            font-size: 24px;
+            color: #fff;
+            cursor: pointer;
+            
+        }
+        .nav-list li:nth-child(11) a { 
+    height: auto;
+    min-height: 50px;
+    align-items: flex-start;
+    padding-top: 8px;
+    padding-bottom: 8px;
 }
 
-.logo-circle {
-    width: 70px;
-    height: 70px;
-    border: 1px solid black;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+        .nav-list {
+            margin-top: 20px;
+            padding-left: 0;
+        }
+
+        .nav-list li {
+            list-style: none;
+            margin: 8px 0;
+            position: relative;
+        }
+
+        .nav-list li a {
+            display: flex;
+            height: 50px;
+            width: 100%;
+            border-radius: 12px;
+            align-items: center;
+            text-decoration: none;
+            color: #fff;
+            transition: all 0.4s ease;
+        }
+
+        .nav-list li a:hover {
+            background: #fff;
+            color: #191970;
+        }
+
+        .nav-list li i {
+            min-width: 50px;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .links_name {
+            opacity: 0;
+            transition: all 0.5s ease;
+            white-space: normal;
+            line-height: 1.2;
+        }
+
+        .sidebar.open .links_name {
+            opacity: 1;
+        }
+
+        
+        .main-content {
+            position: relative;
+            margin-top: 80px;
+            margin-left: 78px;
+            padding: 20px;
+            transition: all 0.5s ease;
+            min-height: calc(100vh - 80px);
+        }
+
+        .sidebar.open ~ .main-content {
+            margin-left: 250px;
+        }
+
+        .sidebar.open ~ .header {
+            left: 250px;
+            width: calc(100% - 250px);
+        }
+        /* Floating Help Button */
+    #helpBtn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        z-index: 1000;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #helpBtn i {
+        font-size: 1.4rem;
+    }
+
+  
+    #logout-item {
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    width: 78px;
+    padding: 0 7px;
+    transition: all 0.5s ease;
 }
 
-.logo-circle img {
-    max-width: 90%;
-    max-height: 90%;
+.sidebar.open #logout-item {
+    width: 250px;
+    padding: 0 15px;
 }
 
-.sidebar {
-    width: 270px;
-    border-right: 2px solid black;
-    background-color: white;
+/* Add margin to last menu item */
+.nav-list li:not(.logout-item):last-child {
+    margin-bottom: 40px; 
 }
 
-.sidebar h5 {
-    background-color: white;
-    font-weight: bold;
+/* Tooltip adjustments */
+.sidebar li .tooltip {
+    left: 70px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: all 0.4s ease;
 }
+
+.sidebar li:hover .tooltip {
+    opacity: 1;
+    left: 80px;
+}
+
+/* Logout hover alignment */
+.logout-item .tooltip {
+    left: 70px !important;
+}
+
+.sidebar.open .logout-item .tooltip {
+    display: none;
+}
+
+/* Hover consistency */
+.nav-list li a:hover {
+    background: #fff !important;
+    color: #191970 !important;
+}
+
+.logout-link:hover {
+    background: #fff !important;
+    color: #ff4d4f !important;
+}
+
+
+     /* Tooltip styling */
+     .sidebar li .tooltip {
+    left: 85px; 
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: all 0.4s ease;
+    background: #fff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 400;
+  opacity: 0;
+  white-space: nowrap;
+  pointer-events: none;
+  padding: 6px 12px;
+  
+}
+
+.sidebar li:hover .tooltip {
+    opacity: 1;
+    left: 80px; 
+}
+  
+    .sidebar.open li .tooltip {
+        display: none;
+    }
+    
