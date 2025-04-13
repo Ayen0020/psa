@@ -1,10 +1,4 @@
-<?php
-session_start();
-if (!isset($_SESSION['username'])) {
-    header("Location: index.html");
-    exit();
-}
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -253,8 +247,11 @@ if (isset($_POST['logout'])) {
             padding: 6px 14px;
             z-index: 99;
             transition: all 0.5s ease;
+            overflow-y: auto; 
         }
-
+        .sidebar::-webkit-scrollbar {
+    display: none; 
+}
         .sidebar.open {
             width: 250px;
         }
@@ -300,8 +297,12 @@ if (isset($_POST['logout'])) {
         .nav-list {
             margin-top: 20px;
             padding-left: 0;
+            overflow-y: auto; 
+            max-height: calc(100vh - 80px);
         }
-
+        .nav-list::-webkit-scrollbar {
+    display: none;
+}
         .nav-list li {
             list-style: none;
             margin: 8px 0;
