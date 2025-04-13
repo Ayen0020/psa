@@ -165,6 +165,29 @@ document.querySelector('.logout-item a').addEventListener('click', (e) => {
             confirmButtonText: 'Got it!'
         });
     });
+//     // Initialize tooltips with proper configuration
+// document.addEventListener('DOMContentLoaded', () => {
+//     const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+//     tooltipTriggerList.map(el => new bootstrap.Tooltip(el, {
+//         boundary: 'window',
+//         placement: 'right',
+//         trigger: 'hover'
+//     }));
+
+//     // Handle sidebar toggle
+//     document.getElementById('btn').addEventListener('click', function() {
+//         const sidebar = document.querySelector('.sidebar');
+//         sidebar.classList.toggle('open');
+        
+//         // Update all tooltip positions
+//         tooltipTriggerList.forEach(trigger => {
+//             const tooltip = bootstrap.Tooltip.getInstance(trigger);
+//             if (tooltip) {
+//                 tooltip.update();
+//             }
+//         });
+//     });
+// });
     </script>
 
 
@@ -192,6 +215,31 @@ if (isset($_POST['logout'])) {
 </html>
 
 <style>
+
+/* Custom Tooltip Styles */
+.tooltip {
+    position: fixed !important;
+    z-index: 9999 !important;
+}
+
+.tooltip-inner {
+    background-color: #fff !important;
+    color: #191970 !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+    padding: 8px 12px !important;
+    font-size: 14px !important;
+    font-family: 'Poppins', sans-serif !important;
+    max-width: 300px !important;
+}
+
+.bs-tooltip-end .tooltip-arrow::before {
+    border-right-color: #fff !important;
+    filter: drop-shadow(2px 0 2px rgba(0, 0, 0, 0.1));
+    left: -4px !important;
+}
+
+
         /* Combined CSS Styles */
         body {
             font-family: 'Poppins', sans-serif;
@@ -297,8 +345,8 @@ if (isset($_POST['logout'])) {
         .nav-list {
             margin-top: 20px;
             padding-left: 0;
-            overflow-y: auto; 
-            max-height: calc(100vh - 80px);
+            position: relative;
+           
         }
         .nav-list::-webkit-scrollbar {
     display: none;
@@ -398,19 +446,6 @@ if (isset($_POST['logout'])) {
     margin-bottom: 40px; 
 }
 
-/* Tooltip adjustments */
-.sidebar li .tooltip {
-    left: 70px;
-    top: 50%;
-    transform: translateY(-50%);
-    opacity: 0;
-    transition: all 0.4s ease;
-}
-
-.sidebar li:hover .tooltip {
-    opacity: 1;
-    left: 80px;
-}
 
 /* Logout hover alignment */
 .logout-item .tooltip {
@@ -426,6 +461,28 @@ if (isset($_POST['logout'])) {
     background: #fff !important;
     color: #191970 !important;
 }
+/* .tooltip {
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #fff;
+    color: #191970;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 8px 12px;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s ease;
+    z-index: 9999;
+} */
+.nav-list li:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+}
 
 .logout-link:hover {
     background: #fff !important;
@@ -433,32 +490,37 @@ if (isset($_POST['logout'])) {
 }
 
 
-     /* Tooltip styling */
-     .sidebar li .tooltip {
-    left: 85px; 
+ .tooltip {
+    position: absolute;
+    left: 85px;
     top: 50%;
     transform: translateY(-50%);
-    opacity: 0;
-    transition: all 0.4s ease;
     background: #fff;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-  border-radius: 4px;
-  font-size: 15px;
-  font-weight: 400;
-  opacity: 0;
-  white-space: nowrap;
-  pointer-events: none;
-  padding: 6px 12px;
-  
-}
-
+    color: #191970;
+    padding: 6px 12px;
+    border-radius: 4px;
+    white-space: nowrap;
+    font-size: 15px;
+    font-weight: 400;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.4s ease;
+    z-index: 999;
+ 
+ }
 .sidebar li:hover .tooltip {
     opacity: 1;
     left: 80px; 
+    visibility: visible;
 }
-  
-    .sidebar.open li .tooltip {
-        display: none;
-    }
-    
+.sidebar:not(.open) li:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+    left: 80px;
+}
+.sidebar.open li .tooltip {
+    display: none;
+}
+
     </style>
